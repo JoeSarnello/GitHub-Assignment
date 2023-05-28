@@ -1,0 +1,42 @@
+---
+title: "Game of Thrones Deaths"
+author: "Joe Sarnello"
+output: html_document 
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+got <- read_csv("character_data_S01-S08.csv")  
+```
+
+```{r}
+#Graph 1
+got_clean <- got %>% 
+  mutate(Gender = ifelse(sex== 1, "Male", "Female"))
+ggplot(got_clean, aes(x = Gender, fill= Gender)) +
+  geom_bar() + 
+    geom_text(aes(label = ..count..), stat = "count", vjust = 1.5, colour = "white") +
+  scale_fill_manual(values=c("red", "blue")) +
+  labs(title = "More Males Have Died Than Females")
+
+```
+
+```{r}
+#Graph 2
+ggplot(got_clean, aes(x = dth_season)) +
+  geom_bar(fill="steelblue") + 
+  geom_text(aes(label = ..count..), stat = "count", vjust = 1.5, colour = "white") +
+  labs(title = "Season 6 Has The Most Character Deaths")
+```
+
+> My audience for this project is Game of Thrones fans. The dataset I am using observes all characters who have died. Right away, I wanted to be able to answer two questions: Who has died more, females or males? Which season has the most characters died in? The first visualization answers my first question. It presents that 254 men have died compared to only 105 women. This means that 149 more men have died than women. The second visualization answers the second question. With 53 total deaths, season six wins the contest for most character deaths. The next closest was season two with 33 deaths, which is 20 less than season 6. In the end, I believe these bar graphs perfectly and clearly answered the two questions for all Games of Thrones fans to observe. 
+
